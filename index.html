@@ -1,347 +1,192 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description"
+    content="Anleitung: Cache, Cookies und Browserverlauf in Chrome & Firefox (Desktop & Android) sicher löschen – mit Tastenkürzeln, Menüpfaden und Tipps." />
+  <meta name="robots" content="index,follow" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1020" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Cache & Verlauf leeren – Chrome & Firefox" />
+  <meta property="og:description"
+    content="So entfernst du Cache, Cookies und Browserverlauf – mit Schritt-für-Schritt-Anleitung und Sicherheitshinweisen." />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2378a9ff'/%3E%3Cstop offset='1' stop-color='%239ed2ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='14' width='64' height='64' fill='%23121735'/%3E%3Cpath d='M20 22h24v4H20zM20 30h24v4H20zM20 38h16v4H20z' fill='url(%23g)'/%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="icons/icon-192.svg" />
+  <link rel="manifest" href="site.webmanifest" />
   <title>Cache & Verlauf leeren – Chrome & Firefox</title>
-  <style>
-    :root {
-      --bg: #0b1020;
-      --panel: #121735;
-      --panel-2: #19204a;
-      --text: #e8ecff;
-      --muted: #a9b1d6;
-      --accent: #78a9ff;
-      --accent-2: #9ed2ff;
-      --ok: #38d39f;
-      --warn: #ffd166;
-      --danger: #ff6b6b;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius: 18px;
-    }
-
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font: 16px/1.55 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--text);
-      background: radial-gradient(1200px 800px at 10% 0%, #0f1640 0%, var(--bg) 45%),
-                  radial-gradient(800px 1000px at 100% 0%, #18204e 0%, var(--bg) 60%),
-                  var(--bg);
-    }
-
-    .wrap {
-      max-width: 980px;
-      margin: clamp(16px, 3vw, 36px) auto 56px;
-      padding: 0 18px;
-    }
-
-    header.hero {
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: calc(var(--radius) + 6px);
-      padding: clamp(18px, 4vw, 36px);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-
-    header.hero::after {
-      content: "";
-      position: absolute;
-      inset: -40px -80px auto auto;
-      width: 280px; height: 280px;
-      background: conic-gradient(from 180deg, var(--accent), transparent 40%);
-      opacity: .35; filter: blur(36px);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    h1 { font-size: clamp(26px, 4.4vw, 40px); margin: 0 0 10px; letter-spacing: .3px; }
-    .sub { color: var(--muted); margin: 6px 0 0; font-size: clamp(15px, 2.4vw, 18px); }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
-    }
-
-    .card {
-      background: linear-gradient(180deg, var(--panel), var(--panel-2));
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 16px 16px 12px;
-    }
-
-    .badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(120,169,255,.14);
-      color: var(--accent-2);
-      border: 1px solid rgba(120,169,255,.35);
-      padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
-      letter-spacing: .2px; text-transform: uppercase;
-    }
-
-    h2 { font-size: 20px; margin: 12px 0 8px; }
-    h3 { font-size: 16px; margin: 10px 0 6px; color: var(--accent-2); }
-    p { margin: 8px 0; color: var(--text); }
-    ul { margin: 8px 0 8px 18px; }
-
-    .steps { counter-reset: step; list-style: none; padding: 0; margin: 8px 0; }
-    .steps li { counter-increment: step; margin: 10px 0; padding-left: 36px; position: relative; }
-    .steps li::before {
-      content: counter(step);
-      position: absolute; left: 0; top: 0;
-      width: 26px; height: 26px; border-radius: 50%;
-      display: inline-grid; place-items: center; font-weight: 700; font-size: 12px;
-      background: rgba(158,210,255,.18);
-      border: 1px solid rgba(158,210,255,.4);
-      color: var(--accent-2);
-    }
-
-    details {
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.02);
-      border-radius: 14px; padding: 10px 12px; margin: 10px 0;
-    }
-
-    details[open] summary { color: var(--accent); }
-    summary { cursor: pointer; font-weight: 700; }
-
-    .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; background: rgba(255,255,255,.08); padding: 2px 6px; border-radius: 6px; border: 1px solid rgba(255,255,255,.1); }
-
-    .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-    button.btn {
-      appearance: none; border: 1px solid rgba(255,255,255,.08);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      color: var(--text); padding: 10px 14px; border-radius: 12px;
-      font-weight: 700; cursor: pointer; box-shadow: var(--shadow);
-      transition: transform .05s ease, background .2s ease, border-color .2s ease;
-    }
-    button.btn:hover { transform: translateY(-1px); border-color: rgba(158,210,255,.45); }
-    button.btn:active { transform: translateY(0); }
-
-    .note { font-size: 14px; color: var(--muted); }
-
-    .hint { display: flex; gap: 10px; align-items: start; padding: 12px; border-radius: 12px;
-      background: rgba(255, 209, 102, .09); border: 1px solid rgba(255, 209, 102, .45); }
-
-    .danger { background: rgba(255, 107, 107, .07); border-color: rgba(255, 107, 107, .5); }
-
-    footer { margin-top: 26px; color: var(--muted); text-align: center; font-size: 14px; }
-
-    /* Print */
-    @media print {
-      body { background: #fff; color: #000; }
-      header.hero, .card, details { box-shadow: none; background: #fff; border: 1px solid #ccc; }
-      .badge { border-color: #999; color: #333; background: #f2f2f2; }
-      .btn-row, .demo { display: none !important; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
   <div class="wrap">
     <header class="hero">
       <span class="badge">Kurzanleitung · Datenschutz</span>
       <h1>Cache & Verlauf leeren – Chrome & Firefox</h1>
-      <p class="sub">So entfernst du Cache, Cookies und Browserverlauf auf Desktop & Smartphone. Mit Tastenkürzeln, Menüpfaden und Sicherheitshinweisen.</p>
+      <p class="sub">So entfernst du Cache, Cookies und Browserverlauf auf Desktop & Smartphone. Mit Tastenkürzeln,
+        Menüpfaden und Sicherheitshinweisen.</p>
     </header>
 
-    <section class="grid" aria-label="Browser-Abschnitte">
-      <!-- Chrome -->
-      <article class="card" id="chrome">
-        <h2>Google Chrome (Desktop)</h2>
-        <p class="note">Schnellzugriff: <span class="kbd">Strg</span> + <span class="kbd">Shift</span> + <span class="kbd">Entf</span> (Windows/Linux) · <span class="kbd">⌘</span> + <span class="kbd">Shift</span> + <span class="kbd">Entf</span> (macOS)</p>
-        <ol class="steps">
-          <li>Öffne das Menü <strong>⋮</strong> oben rechts.</li>
-          <li>Gehe zu <strong>Verlauf → Verlauf</strong> und klicke auf <strong>Browserdaten löschen</strong> <em>(oder direkt per Tastenkürzel)</em>.</li>
-          <li>Wähle den <strong>Zeitraum</strong> (z. B. „Gesamte Zeit“).</li>
-          <li>Aktiviere nach Bedarf:
-            <ul>
-              <li><strong>Browserverlauf</strong> (entfernt die besuchten Seitenliste)</li>
-              <li><strong>Cookies und andere Websitedaten</strong> (meldet dich von den meisten Seiten ab)</li>
-              <li><strong>Bilder und Dateien im Cache</strong> (macht Speicher frei, lädt Seiten frisch)</li>
-            </ul>
-          </li>
-          <li>Klicke auf <strong>Daten löschen</strong>.</li>
-        </ol>
-        <details>
-          <summary>Optional: Nur Cache leeren (eingeloggt bleiben)</summary>
-          <p>Aktiviere ausschließlich <em>Bilder und Dateien im Cache</em>. Cookies/Verlauf abwählen.</p>
-        </details>
-      </article>
+    <main id="inhalt" tabindex="-1">
+      <section class="grid" aria-label="Browser-Abschnitte">
+        <!-- Chrome -->
+        <article class="card" id="chrome">
+          <h2>Google Chrome (Desktop)</h2>
+          <p class="note">Schnellzugriff: <span class="kbd">Strg</span> + <span class="kbd">Shift</span> + <span
+              class="kbd">Entf</span> (Windows/Linux) · <span class="kbd">⌘</span> + <span class="kbd">Shift</span> +
+            <span class="kbd">Entf</span> (macOS)
+          </p>
+          <ol class="steps">
+            <li>Öffne das Menü <strong>⋮</strong> oben rechts.</li>
+            <li>Gehe zu <strong>Verlauf → Verlauf</strong> und klicke auf <strong>Browserdaten löschen</strong>
+              <em>(oder direkt per Tastenkürzel)</em>.
+            </li>
+            <li>Wähle den <strong>Zeitraum</strong> (z. B. „Gesamte Zeit“).</li>
+            <li>Aktiviere nach Bedarf:
+              <ul>
+                <li><strong>Browserverlauf</strong> (entfernt die besuchten Seitenliste)</li>
+                <li><strong>Cookies und andere Websitedaten</strong> (meldet dich von den meisten Seiten ab)</li>
+                <li><strong>Bilder und Dateien im Cache</strong> (macht Speicher frei, lädt Seiten frisch)</li>
+              </ul>
+            </li>
+            <li>Klicke auf <strong>Daten löschen</strong>.</li>
+          </ol>
+          <details>
+            <summary>Optional: Nur Cache leeren (eingeloggt bleiben)</summary>
+            <p>Aktiviere ausschließlich <em>Bilder und Dateien im Cache</em>. Cookies/Verlauf abwählen.</p>
+          </details>
+        </article>
 
-      <!-- Firefox -->
-      <article class="card" id="firefox">
-        <h2>Mozilla Firefox (Desktop)</h2>
-        <p class="note">Schnellzugriff: <span class="kbd">Strg</span> + <span class="kbd">Shift</span> + <span class="kbd">Entf</span> (Windows/Linux) · <span class="kbd">⌘</span> + <span class="kbd">Shift</span> + <span class="kbd">Entf</span> (macOS)</p>
-        <ol class="steps">
-          <li>Öffne das Menü <strong>≡</strong> oben rechts.</li>
-          <li>Wähle <strong>Verlauf → Neueste Chronik löschen…</strong>.</li>
-          <li>Lege den <strong>Zeitraum</strong> fest (z. B. „Alles“).</li>
-          <li>Klicke auf <strong>Details</strong> und wähle die gewünschten Datenarten:
-            <ul>
-              <li><strong>Besuchte Seiten & Download-Chronik</strong></li>
-              <li><strong>Cookies</strong></li>
-              <li><strong>Zwischengespeicherte Webinhalte</strong> (Cache)</li>
-              <li><strong>Angemeldete Sitzungen / Aktive Logins</strong> (optional)</li>
-            </ul>
-          </li>
-          <li>Bestätige mit <strong>OK</strong>.</li>
-        </ol>
-        <details>
-          <summary>Nur Cache leeren</summary>
-          <p>Wähle ausschließlich <em>Zwischengespeicherte Webinhalte</em> aus.</p>
-        </details>
-      </article>
+        <!-- Firefox -->
+        <article class="card" id="firefox">
+          <h2>Mozilla Firefox (Desktop)</h2>
+          <p class="note">Schnellzugriff: <span class="kbd">Strg</span> + <span class="kbd">Shift</span> + <span
+              class="kbd">Entf</span> (Windows/Linux) · <span class="kbd">⌘</span> + <span class="kbd">Shift</span> +
+            <span class="kbd">Entf</span> (macOS)
+          </p>
+          <ol class="steps">
+            <li>Öffne das Menü <strong>≡</strong> oben rechts.</li>
+            <li>Wähle <strong>Verlauf → Neueste Chronik löschen…</strong>.</li>
+            <li>Lege den <strong>Zeitraum</strong> fest (z. B. „Alles“).</li>
+            <li>Klicke auf <strong>Details</strong> und wähle die gewünschten Datenarten:
+              <ul>
+                <li><strong>Besuchte Seiten & Download-Chronik</strong></li>
+                <li><strong>Cookies</strong></li>
+                <li><strong>Zwischengespeicherte Webinhalte</strong> (Cache)</li>
+                <li><strong>Angemeldete Sitzungen / Aktive Logins</strong> (optional)</li>
+              </ul>
+            </li>
+            <li>Bestätige mit <strong>OK</strong>.</li>
+          </ol>
+          <details>
+            <summary>Nur Cache leeren</summary>
+            <p>Wähle ausschließlich <em>Zwischengespeicherte Webinhalte</em> aus.</p>
+          </details>
+        </article>
 
-      <!-- Chrome Android -->
-      <article class="card" id="chrome-android">
-        <h2>Chrome (Android)</h2>
-        <ol class="steps">
-          <li>Tippe auf <strong>⋮</strong> → <strong>Verlauf</strong>.</li>
-          <li>Wähle <strong>Browserdaten löschen</strong>.</li>
-          <li>Zeitraum festlegen, Optionen wählen (Verlauf, Cookies, Cache) → <strong>Daten löschen</strong>.</li>
-        </ol>
-      </article>
+        <!-- Chrome Android -->
+        <article class="card" id="chrome-android">
+          <h2>Chrome (Android)</h2>
+          <ol class="steps">
+            <li>Tippe auf <strong>⋮</strong> → <strong>Verlauf</strong>.</li>
+            <li>Wähle <strong>Browserdaten löschen</strong>.</li>
+            <li>Zeitraum festlegen, Optionen wählen (Verlauf, Cookies, Cache) → <strong>Daten löschen</strong>.</li>
+          </ol>
+        </article>
 
-      <!-- Firefox Android -->
-      <article class="card" id="firefox-android">
-        <h2>Firefox (Android)</h2>
-        <ol class="steps">
-          <li>Tippe auf <strong>≡</strong> → <strong>Einstellungen</strong>.</li>
-          <li>Wähle <strong>Privatsphäre & Sicherheit</strong> → <strong>Browserdaten löschen</strong>.</li>
-          <li>Datenarten wählen (Verlauf, Cookies, Cache) → <strong>Löschen</strong>.</li>
-        </ol>
-      </article>
+        <!-- Firefox Android -->
+        <article class="card" id="firefox-android">
+          <h2>Firefox (Android)</h2>
+          <ol class="steps">
+            <li>Tippe auf <strong>≡</strong> → <strong>Einstellungen</strong>.</li>
+            <li>Wähle <strong>Privatsphäre & Sicherheit</strong> → <strong>Browserdaten löschen</strong>.</li>
+            <li>Datenarten wählen (Verlauf, Cookies, Cache) → <strong>Löschen</strong>.</li>
+          </ol>
+        </article>
 
-      <!-- Hinweise -->
-      <article class="card">
-        <h2>Wichtige Hinweise</h2>
-        <div class="hint">
-          <div>⚠️</div>
-          <div>
-            <p><strong>Cookies löschen</strong> meldet dich auf den meisten Websites ab und setzt Website‑Einstellungen zurück.</p>
-            <p class="note">Passwörter werden nur gelöscht, wenn du die entsprechende Option explizit auswählst (Chrome: „Passwörter und andere Anmeldedaten“, Firefox: „Gespeicherte Zugangsdaten“).</p>
+        <!-- Hinweise -->
+        <article class="card">
+          <h2>Wichtige Hinweise</h2>
+          <div class="hint">
+            <div>⚠️</div>
+            <div>
+              <p><strong>Cookies löschen</strong> meldet dich auf den meisten Websites ab und setzt
+                Website‑Einstellungen zurück.</p>
+              <p class="note">Passwörter werden nur gelöscht, wenn du die entsprechende Option explizit auswählst
+                (Chrome: „Passwörter und andere Anmeldedaten“, Firefox: „Gespeicherte Zugangsdaten“).</p>
+            </div>
           </div>
-        </div>
-        <p style="margin-top:10px">Möchtest du nur Darstellungsfehler beheben oder Speicher freigeben, reicht meistens das <em>Leeren des Caches</em>.</p>
-        <details>
-          <summary>Tipps für hartnäckige Probleme</summary>
-          <ul>
-            <li>Seite hart neu laden: <span class="kbd">Strg</span> + <span class="kbd">F5</span> (Windows/Linux) oder <span class="kbd">⌘</span> + <span class="kbd">Shift</span> + <span class="kbd">R</span> (macOS)</li>
-            <li>Im <em>Inkognito/Privat</em>-Fenster testen, ob die Seite ohne Erweiterungen funktioniert.</li>
-            <li>Nur <em>für diese Seite</em> Cookies löschen (Website‑Sperrschloss → <em>Cookies/Website‑Daten</em> → Entfernen).</li>
-          </ul>
-        </details>
-      </article>
-
-      <!-- Mini-Demo: Lokale Daten -->
-      <article class="card">
-        <h2>Mini‑Demo: Lokale Daten dieser Seite</h2>
-        <p class="note">Diese Buttons wirken <em>nur</em> auf Daten im aktuellen Tab (localStorage/sessionStorage/Caches API).</p>
-        <div class="btn-row">
-          <button class="btn" id="btnSave">Test‑Eintrag speichern</button>
-          <button class="btn" id="btnShow">Gespeichertes anzeigen</button>
-          <button class="btn" id="btnClearLocal">localStorage leeren</button>
-          <button class="btn" id="btnClearSession">sessionStorage leeren</button>
-          <button class="btn" id="btnClearCache">Caches API leeren</button>
-        </div>
-        <pre id="demoOut" style="margin-top:12px; background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); padding:12px; border-radius:12px; overflow:auto"></pre>
-      </article>
-
-      <!-- Spickzettel -->
-      <article class="card">
-        <h2>Spickzettel (Cheat‑Sheet)</h2>
-        <div class="grid" style="gap:12px">
-          <div style="border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:12px">
-            <h3>Chrome Desktop</h3>
+          <p style="margin-top:10px">Möchtest du nur Darstellungsfehler beheben oder Speicher freigeben, reicht meistens
+            das <em>Leeren des Caches</em>.</p>
+          <details>
+            <summary>Tipps für hartnäckige Probleme</summary>
             <ul>
-              <li>Tastenkürzel: <span class="kbd">Strg/⌘</span> + <span class="kbd">Shift</span> + <span class="kbd">Entf</span></li>
-              <li>Menü: <em>⋮ → Verlauf → Verlauf → Browserdaten löschen</em></li>
+              <li>Seite hart neu laden: <span class="kbd">Strg</span> + <span class="kbd">F5</span> (Windows/Linux) oder
+                <span class="kbd">⌘</span> + <span class="kbd">Shift</span> + <span class="kbd">R</span> (macOS)
+              </li>
+              <li>Im <em>Inkognito/Privat</em>-Fenster testen, ob die Seite ohne Erweiterungen funktioniert.</li>
+              <li>Nur <em>für diese Seite</em> Cookies löschen (Website‑Sperrschloss → <em>Cookies/Website‑Daten</em> →
+                Entfernen).</li>
             </ul>
-          </div>
-          <div style="border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:12px">
-            <h3>Firefox Desktop</h3>
-            <ul>
-              <li>Tastenkürzel: <span class="kbd">Strg/⌘</span> + <span class="kbd">Shift</span> + <span class="kbd">Entf</span></li>
-              <li>Menü: <em>≡ → Verlauf → Neueste Chronik löschen…</em></li>
-            </ul>
-          </div>
-        </div>
-        <p class="note" style="margin-top:8px">Android: Chrome <em>⋮ → Verlauf → Browserdaten löschen</em> · Firefox <em>≡ → Einstellungen → Privatsphäre & Sicherheit → Browserdaten löschen</em></p>
-      </article>
-    </section>
+          </details>
+        </article>
 
-    <footer>
-      <p>Erstellt als Ein‑Datei‑Seite (HTML+CSS+JS). – Du kannst diese Seite lokal speichern und offline verwenden.</p>
-    </footer>
+        <!-- Mini-Demo: Lokale Daten -->
+        <article class="card">
+          <h2>Mini‑Demo: Lokale Daten dieser Seite</h2>
+          <p class="note">Diese Buttons wirken <em>nur</em> auf Daten im aktuellen Tab
+            (localStorage/sessionStorage/Caches API).</p>
+          <div class="btn-row">
+            <button class="btn" id="btnSave" type="button">Test‑Eintrag speichern</button>
+            <button class="btn" id="btnShow" type="button">Gespeichertes anzeigen</button>
+            <button class="btn" id="btnClearLocal" type="button">localStorage leeren</button>
+            <button class="btn" id="btnClearSession" type="button">sessionStorage leeren</button>
+            <button class="btn" id="btnClearCache" type="button">Caches API leeren</button>
+          </div>
+          <pre id="demoOut" role="status" aria-live="polite"
+            style="margin-top:12px; background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); padding:12px; border-radius:12px; overflow:auto"></pre>
+        </article>
+
+        <!-- Spickzettel -->
+        <article class="card">
+          <h2>Spickzettel (Cheat‑Sheet)</h2>
+          <div class="grid" style="gap:12px">
+            <div style="border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:12px">
+              <h3>Chrome Desktop</h3>
+              <ul>
+                <li>Tastenkürzel: <span class="kbd">Strg/⌘</span> + <span class="kbd">Shift</span> + <span
+                    class="kbd">Entf</span></li>
+                <li>Menü: <em>⋮ → Verlauf → Verlauf → Browserdaten löschen</em></li>
+              </ul>
+            </div>
+            <div style="border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:12px">
+              <h3>Firefox Desktop</h3>
+              <ul>
+                <li>Tastenkürzel: <span class="kbd">Strg/⌘</span> + <span class="kbd">Shift</span> + <span
+                    class="kbd">Entf</span></li>
+                <li>Menü: <em>≡ → Verlauf → Neueste Chronik löschen…</em></li>
+              </ul>
+            </div>
+          </div>
+          <p class="note" style="margin-top:8px">Android: Chrome <em>⋮ → Verlauf → Browserdaten löschen</em> · Firefox
+            <em>≡ → Einstellungen → Privatsphäre & Sicherheit → Browserdaten löschen</em>
+          </p>
+        </article>
+      </section>
+
+      <footer>
+        <p>Du kannst diese Seite lokal speichern und offline verwenden.</p>
+      </footer>
+    </main>
   </div>
 
-  <script>
-    // Utility: write to demo log
-    const out = document.getElementById('demoOut');
-    function log(msg) {
-      const time = new Date().toLocaleTimeString();
-      out.textContent += `[${time}] ${msg}\n`;
-      out.scrollTop = out.scrollHeight;
-    }
-
-    // Demo buttons
-    const btnSave = document.getElementById('btnSave');
-    const btnShow = document.getElementById('btnShow');
-    const btnClearLocal = document.getElementById('btnClearLocal');
-    const btnClearSession = document.getElementById('btnClearSession');
-    const btnClearCache = document.getElementById('btnClearCache');
-
-    btnSave?.addEventListener('click', () => {
-      localStorage.setItem('demo:key', 'Wert-' + Math.random().toString(36).slice(2,7));
-      sessionStorage.setItem('demo:sess', Date.now().toString());
-      log('Testeinträge in localStorage und sessionStorage gespeichert.');
-    });
-
-    btnShow?.addEventListener('click', () => {
-      const ls = localStorage.getItem('demo:key');
-      const ss = sessionStorage.getItem('demo:sess');
-      log('localStorage demo:key = ' + JSON.stringify(ls));
-      log('sessionStorage demo:sess = ' + JSON.stringify(ss));
-    });
-
-    btnClearLocal?.addEventListener('click', () => {
-      try {
-        localStorage.clear();
-        log('localStorage geleert.');
-      } catch (e) { log('Fehler beim Leeren von localStorage: ' + e); }
-    });
-
-    btnClearSession?.addEventListener('click', () => {
-      try {
-        sessionStorage.clear();
-        log('sessionStorage geleert.');
-      } catch (e) { log('Fehler beim Leeren von sessionStorage: ' + e); }
-    });
-
-    btnClearCache?.addEventListener('click', async () => {
-      if (!('caches' in window)) { log('Caches API nicht verfügbar.'); return; }
-      try {
-        const names = await caches.keys();
-        for (const n of names) await caches.delete(n);
-        log('Caches API geleert: ' + (names.length ? names.join(', ') : 'keine Einträge'));
-      } catch (e) { log('Fehler beim Leeren der Caches API: ' + e); }
-    });
-
-    // Nice: remember accordion state per session
-    document.querySelectorAll('details').forEach((det, i) => {
-      const key = 'ui:det-' + i;
-      const saved = sessionStorage.getItem(key);
-      if (saved === '1') det.open = true;
-      det.addEventListener('toggle', () => {
-        sessionStorage.setItem(key, det.open ? '1' : '0');
-      });
-    });
-  </script>
+  <script src="main.js"></script>
 </body>
+
 </html>
